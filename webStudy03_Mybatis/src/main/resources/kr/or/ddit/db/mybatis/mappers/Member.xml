@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.member.dao.MemberDAO">
+	<select id="selectMemberById" parameterType="String" resultType="MemberVO">
+		SELECT MEM_ID , MEM_PASS, MEM_NAME
+		FROM MEMBER 
+		WHERE MEM_ID = #{mem_id}
+	</select>
+	
+	<select id="selectMemebrList" resultType="MemberVO">
+			SELECT    mem_id,    mem_pass,    mem_name,     
+		    mem_regno1,    mem_regno2,    mem_bir,    mem_zip,   
+		    mem_add1,    mem_add2,    mem_hometel,    mem_comtel, 
+		    mem_hp,    mem_mail,    mem_job,    mem_like,         
+		    mem_memorial,    mem_memorialday,    mem_mileage,     
+		    mem_delete FROM    member                             
+	
+	</select>
+	
+	<select id="selectMemberDetail" resultType="MemberVO" parameterType="String">
+		SELECT    
+				 MEM_ID,    MEM_PASS,    MEM_NAME,         
+				 MEM_REGNO1,    MEM_REGNO2,     to_char(mem_bir,'yyyy-mm-dd') as mem_bir,    MEM_ZIP,     
+				 MEM_ADD1,    MEM_ADD2,    MEM_HOMETEL,    MEM_COMTEL, 
+				 MEM_HP,    MEM_MAIL,    MEM_JOB,    MEM_LIKE,         
+				 MEM_MEMORIAL,     to_char(mem_memorialday,'yyyy-mm-dd') as mem_memorialday,     MEM_MILEAGE,      
+				 MEM_DELETE
+				 FROM    MEMBER                              
+		 WHERE MEM_ID = #{mem_id}                                       
+	
+	</select>
+ 	<update id="updateMember" parameterType="MemberVO">
+ 	UPDATE member
+    	SET
+	        mem_name =#{memName,jdbcType=VARCHAR}    , 
+	        mem_bir =to_date(#{memBir,jdbcType=DATE},'YYYY-MM-DD'), 
+	        mem_zip =#{memZip,jdbcType=VARCHAR}   ,  
+	        mem_add1 =#{memAdd1 ,jdbcType=VARCHAR},
+	        mem_add2 =#{memAdd2,jdbcType=VARCHAR},
+	       	mem_hometel =#{memHometel,jdbcType=VARCHAR}   ,
+	        mem_comtel =#{memComtel ,jdbcType=VARCHAR}    ,
+	 	    mem_hp =#{memHp},
+	 	    mem_mail =#{memMail},
+	 	    mem_job =#{memJob},
+	 	    mem_like =#{memLike},
+	        mem_memorial =#{memMemorial,jdbcType=VARCHAR},   
+	    	mem_memorialday =to_date(#{memMemorialday,jdbcType=DATE},'YYYY-MM-DD' ),   
+	    	mem_mileage =#{memMileage ,jdbcType=NUMERIC}
+	WHERE
+		mem_id =#{memId}
+ 	
+ 	</update>
+ 	
+ 	<delete id="deleteMember" parameterType="String">
+ 		UPDATE MEMBER
+ 		SET 
+ 		MEM_DELETE = '1' 
+ 		WHERE MEM_ID = #{mem_id}
+ 	
+ 	</delete>
+ 	
+</mapper>
