@@ -1,3 +1,4 @@
+<%@page import="kr.or.ddit.vo.PagingVO"%>
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -26,12 +27,15 @@ padding :10px;
 <body>
  
 <table  class="table table-hover" >
+
+<tbody>
 	<tr>
 	<th>아이디</th><th>이름</th><th>지역</th><th>휴대폰</th><th>이메일</th><th>마일리지</th>
 	</tr>
 	 
 <%
-List<MemberVO> memList =(List<MemberVO> )request.getAttribute("memList");
+	PagingVO<MemberVO> pagingVO = (PagingVO)request.getAttribute("pagingVO");
+	List<MemberVO> memList =pagingVO.getDetaList();
 	if(	memList.size()==0){
 		
 %>
@@ -53,7 +57,35 @@ List<MemberVO> memList =(List<MemberVO> )request.getAttribute("memList");
 	}
 %>
 
+</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="6">
+				<%=pagingVO.getPagingHTML() %>
+				<div id="searchUI">
+					<select name="searchType">
+						<option value>전체</option>
+						<option value="name">이름</option>
+						<option value="address">지역</option>
+						<option value="hp">휴대폰</option>
+					</select>
+					<input name="searchWord"/>
+					<button type="button" id="searchBtn">검색</button>
+				</div>
+			</td>
+		</tr>
+	</tfoot>
+
 </table>
+
+<form id="searchForm">
+	<input type="text" name="searchType"/>
+	<input type="text" name="searchWord"/>
+	<input type="text" name="page"/>
+
+</form>
+
+
 	<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog  modal-dialog-scrollable">
@@ -75,6 +107,31 @@ List<MemberVO> memList =(List<MemberVO> )request.getAttribute("memList");
 
 	<script type="text/javascript">
 	$(function(){
+		$("[name='searchType']").val("${pagingVO.simpleSearch.searchType}");
+		$("[name='searchWord']").val("${pagingVO.simpleSearch.searchWord}");//null 값을 whitespace로 바꿈 
+		$(".pageLink").on("click" , function(event){
+			event.preventDefault();
+			let page= $(this).data("page");
+			searchForm.find('[name="page"]').val(page);
+			searchForm.submit();
+			
+			return false;
+		}).css("cursor","pointer");
+		//페이징 처리 
+		let searchForm = $("#searchForm")
+		
+		let searchUI = $("#searchUI").on("click" ,"#searchBtn" , function(){
+		let inputs = searchUI.find(":input[name]");
+		$(inputs).each(function(idx , input){
+			let name = this.name ;
+			let value = $(this).val()
+			searchForm.find("[name='"+name+"']").val(value);
+		})//
+		searchForm.submit();
+	});
+		
+		
+		
 			
 		let exampleModal = $("#exampleModal").modal({
 			show:false

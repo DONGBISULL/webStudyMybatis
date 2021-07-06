@@ -28,12 +28,12 @@ public class MemberDaoImplTest {
 		fail("Not yet implemented");
 	}
 */
-	@Test
-	public void testSelectMemebrList() {
-		List<MemberVO> list =  dao.selectMemebrList();
-		//System.out.println(list);
-		assertNotNull(list);
-	}
+//	@Test
+//	public void testSelectMemebrList() {
+//		List<MemberVO> list =  dao.selectMemebrList(PagingVO);
+//		//System.out.println(list);
+//		assertNotNull(list);
+//	}
 
 @Test
 	public void testSelectMemberDetail() {

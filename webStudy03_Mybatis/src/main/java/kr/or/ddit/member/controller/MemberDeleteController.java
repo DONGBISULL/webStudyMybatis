@@ -30,9 +30,11 @@ public class MemberDeleteController extends HttpServlet {
 		String message = null;
 		String viewName = null;
 		if(StringUtils.isBlank(memPass)) {
-			resp.sendError(400);
+			resp.sendError(400 ,"필수 파라미터 누락");
+			return ;
 		}
-		MemberVO authMember  =(MemberVO) req.getSession().getAttribute("authMember") ;
+		HttpSession session = req.getSession();
+		MemberVO authMember  =(MemberVO) session.getAttribute("authMember") ;
 		
 		MemberVO member = MemberVO.builder()
 							.memId(authMember.getMemId())
@@ -47,7 +49,6 @@ public class MemberDeleteController extends HttpServlet {
 				//welcome page : redirect
 				//로그아웃 상태로 welcome로 되어있도록 
 				System.out.println("컨트롤러");
-				HttpSession session = req.getSession();
 				session.invalidate();
 				viewName = "redirect:/index.do";
 				break;
@@ -62,8 +63,11 @@ public class MemberDeleteController extends HttpServlet {
 				message ="서버 오류 "; //plash
 				break;
 			}
+			if(message!=null) {
+				req.getSession().setAttribute("message", message);
+			}
 			
-			 req.getSession().setAttribute("message", message);
+			
 			if(viewName.startsWith("redirect:")) {
 				viewName = viewName.substring("redirect:".length());
 				resp.sendRedirect(req.getContextPath() +viewName );

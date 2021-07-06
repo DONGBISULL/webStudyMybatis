@@ -21,7 +21,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
 			throw new UserNotFoundException(String.format("%s 회원은 없음 ", param.getMemId()));
 		}
 		
-		String deleteMem = savedMember.getMemDelete();
+		//String deleteMem = savedMember.getMemDelete();
 		String savedPass = savedMember.getMemPass();
 		String inputPass = param.getMemPass();
 		boolean valid = savedPass.equals(inputPass);

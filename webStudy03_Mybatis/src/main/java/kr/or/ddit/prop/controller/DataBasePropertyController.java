@@ -51,8 +51,8 @@ public class DataBasePropertyController extends HttpServlet{
 		 String accept = req.getHeader("accept");
 		 String search = req.getParameter("search");
 		 DataBasePropertyVO param = new DataBasePropertyVO();
-		 param.setProperty_name(search);
-		 param.setProperty_value(search);
+		 param.setPropertyName(search);
+		 param.setPropertyValue(search);
 		 param.setDescription(search);
 
 		 List<DataBasePropertyVO> propList = 

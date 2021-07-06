@@ -2,6 +2,8 @@ package kr.or.ddit.prop.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.ddit.vo.DataBasePropertyVO;
 
 /**
@@ -10,7 +12,7 @@ import kr.or.ddit.vo.DataBasePropertyVO;
  */
  
 public interface DataBasePropertyDAO {
-	public List<DataBasePropertyVO >selectDataBasePropertyList(DataBasePropertyVO param);
+	public List<DataBasePropertyVO >selectDataBasePropertyList(@Param("param") DataBasePropertyVO param );
 	
 	public List<DataBasePropertyVO>searchDataBasePropertyList(String input);
 }

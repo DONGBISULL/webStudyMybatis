@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import kr.or.ddit.db.ConnectionFactory;
 import kr.or.ddit.db.mybatis.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PagingVO;
 
 public class MemberDaoImpl implements MemberDAO {
 	//	singleton 
@@ -54,11 +55,24 @@ public class MemberDaoImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberVO> selectMemebrList() {
+	public int selectTotalRecord(PagingVO PagingVO) {
+
+		try(
+					SqlSession sqlSession = sqlSessionFactory.openSession();
+					){
+			
+				MemberDAO	mapper = sqlSession.getMapper(MemberDAO.class);
+				return mapper.selectTotalRecord(PagingVO) ;
+			}
+
+	}
+	
+	@Override
+	public List<MemberVO> selectMemebrList(PagingVO PagingVO) {
 		   try(
 				   SqlSession sqlSession= sqlSessionFactory.openSession();
 				   ){
-			   return sqlSession.selectList("kr.or.ddit.member.dao.MemberDAO.selectMemebrList");
+			   return sqlSession.selectList("kr.or.ddit.member.dao.MemberDAO.selectMemebrList" ,PagingVO);
 		   }
 		                                                  
 	}
@@ -100,7 +114,6 @@ public class MemberDaoImpl implements MemberDAO {
 			){
 			MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
 			int rowcnt =  mapper.deleteMember(mem_id) ;
-			System.out.println("dao");
 			sqlSession.commit();
 			return rowcnt;
 		}
