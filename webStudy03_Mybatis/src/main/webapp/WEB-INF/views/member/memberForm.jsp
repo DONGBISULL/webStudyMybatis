@@ -11,12 +11,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="/includee/preScript.jsp"></jsp:include>
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<style type="text/css">
 
+#dataTable{
+width: 100%;
+}
 
+</style>
 
 </head>
 <body>
@@ -45,6 +50,7 @@
 	 
 	<form method="POST" id="memberForm">
 		<table class='table table-bordered'>
+		<tbody>
 			<tr>
 				<th>회원 id</th>
 				<td><input type="text" name="memId"
@@ -83,9 +89,10 @@
 			</tr>
 			<tr>
 				<th>우편번호</th>
-				<td><input type="text" name="memZip"
-					required    value="<%=member.getMemZip()%>" /><label id="memZip-error"
-					class="error" for="memZip"><%=errors.get("memZip")%></label></td>
+				<td><input type="text" name="memZip" required    value="<%=member.getMemZip()%>" />
+				 	<!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
+				 	<button type="button" class="btn btn-primary" name="searchZip" id="searchZip"> 검색  </button>
+					<label id="memZip-error" class="error" for="memZip"><%=errors.get("memZip")%></label></td>
 			</tr>
 			<tr>
 				<th>주소 1</th>
@@ -173,21 +180,137 @@
 					}
 				%>
 			</tr>
-
+	</tbody>
 		</table>
 			</form>
-		<script type="text/javascript">
+			
+ 	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+	<table id='dataTable'>
+	<thead>
+		<tr>
+		<th>우편번호</th>
+		<th>시도</th>
+		<th>구</th>
+		<th>동</th>
+		</tr>
+	</thead>
+		<tbody>
+		
+		
+		</tbody>
+	
+	</table>     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+			
+<script type="text/javascript">
+
+
+$(function(){
 			let insert = $("#insert");
 			let modify = $("#modify");
 			let memberForm =$("#memberForm");
-			$("input[type='button']").on("click" , function(){
-				let url = this.data("url");   
-				memberForm.attr("action" , url)
-				memberForm.submit();
-			})
+			let searchZip = $("#searchZip")
 			
+			let tbody = $("#dataTable tbody")
+			//let exampleModal =  $("#exampleModal")
+	
+			let memZip = $("[name='memZip'")
+	 		
 			
-			$("#memberForm").validate();
-		</script>
+	$("input[type='button']").on("click" , function(){
+		let url = this.data("url");   
+		memberForm.attr("action" , url)
+		memberForm.submit();
+	})
+	
+	
+	$("#memberForm").validate();
+	
+ 
+	let exampleModal = $("#exampleModal").modal({
+		show:false
+	}).on('show.bs.modal' , function(event){
+/* 		console.log(event.relatedTarget);
+		let trTag = event.relatedTarget;
+		if(!trTag) return false;
+		 */
+		$.ajax({
+			url :  "<%=request.getContextPath()%>/member/zipList.do"  ,
+			method : "post",
+			dataType : "json",
+			success : function(data){
+				let trs =[]
+			$('#dataTable').DataTable({
+				data: data,		
+				destroy:true,
+				
+				 columns: [
+					 { data: 'zipcode' },
+				  	 { data: 'sido' },
+				     { data: 'gugun' },
+				     { data: 'dong' }
+				]
+			});
+			 
+			}
+		})
+			
+ 
+	}).on('hidden.bs.modal' , function(){
+		exampleModal.find('#tah').empty();
+	}); //모달
+	
+
+			
+	$("tbody").on("click" , "button[name='searchZip']", function(){
+		exampleModal.modal('show');
+	}).css("cursor" , "pointer");
+	
+ 	
+	$("tbody").on("click" , "tr", function(){
+	 	//console.log(this)
+	 	//console.log($(this).find("td"))
+		//this.get(0)
+		zip = $(this).find("td")[0] 
+	 	let str =""
+	 	for(i in 3){
+	 		str += $($(this).find("td")[i]).text();
+	 		
+	 	}
+		 console.log(str)
+		 
+	 	 
+	 	//console.log(ver1.text())
+	 	memZip.val($(zip).text())
+	}).css("cursor" , "pointer");
+	
+	
+ 
+})
+	
+
+
+	 
+
+</script>
+<jsp:include page="/includee/footer.jsp"></jsp:include>
 </body>
 </html>

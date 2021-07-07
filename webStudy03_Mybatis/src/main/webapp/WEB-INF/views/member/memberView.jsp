@@ -140,11 +140,11 @@ padding :10px;
 
 	<script type="text/javascript">
 	
-		let modify = $("#modify")
+		let modibutton = $("#modify");
 		let deleteForm = $("#deleteForm");
 		let deleteBtn = $("#deleteBtn")
 		
-		modify.on("click" , function(){
+		modibutton.on("click" , function(){
 			url = $(this).data("url");
 			
 			 location.href=url;
@@ -159,14 +159,7 @@ padding :10px;
 		});
 		
 		
-		
-		/* modify.on("click" , function(){
-			url =	$(this).data("url")
-			console.log(url)
-			 location.href=url;
-		}) */
-		
-	
+ 
 	</script>
  
 </body>

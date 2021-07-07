@@ -8,6 +8,7 @@ import kr.or.ddit.member.dao.MemberDAO;
 import kr.or.ddit.member.dao.MemberDaoImpl;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingVO;
+import kr.or.ddit.vo.ZiptbVO;
 
 
 public class MemberServiceImpl implements MemberService {
@@ -121,6 +122,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int retrieveMemberCount(PagingVO pagingVO) {
 		return dao.selectTotalRecord(pagingVO);
+	}
+
+
+	@Override
+	public List<ZiptbVO> selectZipList() {
+		 
+		return dao.selectZipList();
 	}
 
 

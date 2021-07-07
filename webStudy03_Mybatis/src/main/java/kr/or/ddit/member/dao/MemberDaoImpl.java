@@ -15,6 +15,7 @@ import kr.or.ddit.db.ConnectionFactory;
 import kr.or.ddit.db.mybatis.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingVO;
+import kr.or.ddit.vo.ZiptbVO;
 
 public class MemberDaoImpl implements MemberDAO {
 	//	singleton 
@@ -125,6 +126,17 @@ public class MemberDaoImpl implements MemberDAO {
 			return rowcnt;
 		}
 		
+	}
+
+
+	@Override
+	public List<ZiptbVO> selectZipList() {
+		 try(
+				SqlSession sqlSession = sqlSessionFactory.openSession();
+				){
+			 MemberDAO	mapper = sqlSession.getMapper(MemberDAO.class);
+			return mapper.selectZipList() ;
+		}
 	}
 
 }

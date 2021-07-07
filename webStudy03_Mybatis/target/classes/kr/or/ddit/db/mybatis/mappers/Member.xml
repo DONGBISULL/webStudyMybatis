@@ -154,5 +154,12 @@
 )
  	
  	
- 	</insert>
+ 	</insert> 
+ 	<select id="selectZipList" resultType="ZiptbVO" >
+ 	select zipcode ,sido , gugun , dong  from ziptb
+ 	
+ 	</select>
+ 	
+ 	
+ 	
 </mapper>

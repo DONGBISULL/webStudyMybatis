@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingVO;
+import kr.or.ddit.vo.ZiptbVO;
 
 /**
  * 회원 관리(CRUD)를 위한 Persistense Layer 
@@ -38,6 +39,12 @@ public interface MemberDAO {
 	 */
 	public MemberVO selectMemberById(String mem_id); 
 	
+	 
+	/**
+	 * 우편번호 
+	 * @return 우편번호 리턴
+	 */
+	public List<ZiptbVO> selectZipList();
 	
 	public int updateMember(MemberVO member);
 	public int deleteMember(String mem_id); //업데이트로 delete 항목에 

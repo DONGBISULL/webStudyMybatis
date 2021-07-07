@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.ZiptbVO;
 
 public class MemberDaoImplTest {
 	MemberDaoImpl dao ;
@@ -15,6 +16,7 @@ public class MemberDaoImplTest {
 	public void setUp() throws Exception {
 		dao = MemberDaoImpl.getInstance();
 	}
+	 
 
 //	@Test
 //	public void testSelectMemberById() {
@@ -25,11 +27,17 @@ public class MemberDaoImplTest {
 	@Test
 	public void testInsertMember() {
 		MemberVO vo = 	dao.selectMemberDetail("c001");
-		vo.setMemId("dobi2");
+		vo.setMemId("dobi3");
 		System.out.println(vo);
 		int result = 	dao.insertMember(vo);
 		assertEquals(1, result);
 	}
+	@Test
+	public void selectZipList(){
+		List<ZiptbVO> lit = dao.selectZipList();
+		 System.out.println(lit);
+	}
+	
 	/*
 */
 //	@Test

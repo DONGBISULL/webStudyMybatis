@@ -6,6 +6,7 @@ import kr.or.ddit.commons.UserNotFoundException;
 import kr.or.ddit.enumtype.ServiceResult;
 import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingVO;
+import kr.or.ddit.vo.ZiptbVO;
 
 /**
  * 회원관리(CRUD) Business Logic Layer
@@ -43,4 +44,7 @@ public interface MemberService {
 	 * 	INVALIDPASSWORD ,OK , FAIL
 	 */
 	public ServiceResult removeMember(MemberVO vo);
+	
+	
+	public List<ZiptbVO> selectZipList();
 }

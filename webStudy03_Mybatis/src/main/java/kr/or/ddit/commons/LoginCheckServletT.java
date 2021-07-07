@@ -1,6 +1,9 @@
 package kr.or.ddit.commons;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -58,6 +61,7 @@ public class LoginCheckServletT extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		String mem_id = req.getParameter("mem_id");
 		String mem_pass = req.getParameter("mem_pass");
+		 
 		String goPage = null;
 		boolean redirect = false;
 		//2 검증 --> 둘 다 있어야 함 
@@ -76,6 +80,15 @@ public class LoginCheckServletT extends HttpServlet {
 		 }else {
 			//3 인증 
 			 try {
+				//지금 받은 건 java  
+				 MessageDigest md = MessageDigest.getInstance("SHA-512");
+				 //java를 바이트 형식으로 바꿈 
+				 byte[] input = mem_pass.getBytes();
+				//
+				 byte[] encrypted = md.digest(input); 
+				 mem_pass = Base64.getEncoder().encodeToString(encrypted);
+				 param.setMemPass(mem_pass);  
+				 
 				 Object resultValue = service.authenticate(param);
 				 if(resultValue instanceof MemberVO) {
 					 // 1)  성공 : welcome page 이동  (redirection)
@@ -86,7 +99,6 @@ public class LoginCheckServletT extends HttpServlet {
 					 	//로그인에 성공하면 웰컴 페이지로 이동해서 성공한 사람의 이름을 보여줄 것
 					 	 
 						//session.setAttribute("authId", mem_id);
-					 
 					 	
 					 	
 					}else {
@@ -96,7 +108,7 @@ public class LoginCheckServletT extends HttpServlet {
 						session.setAttribute("failId",mem_id);
 						session.setAttribute("message", "비밀번호 오류");
 					}
-			 }catch (UserNotFoundException e) {
+			 }catch (UserNotFoundException | NoSuchAlgorithmException e) {
 				 goPage="/login/loginFormT.jsp";
 				 redirect = true;
 				session.setAttribute("message", e.getMessage());

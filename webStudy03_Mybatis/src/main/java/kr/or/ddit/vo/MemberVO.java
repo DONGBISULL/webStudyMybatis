@@ -68,6 +68,7 @@ public class MemberVO implements Serializable {
    private Boolean memDelete;
    
    private Set<ProdVO> prodList; //has many 관계 -1 : N
-   											//   회원 상품					
+   private List<ZiptbVO> zipList;								//   회원 상품					
 
+   
 }
