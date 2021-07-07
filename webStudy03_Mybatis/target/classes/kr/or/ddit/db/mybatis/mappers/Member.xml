@@ -41,7 +41,7 @@
 	<select id="selectMemebrList" resultType="MemberVO" parameterType="PagingVO">
 	SELECT B.*		
 		FROM  	
-		 (SELECT   A.* , ROWNUM RNUM
+		 (SELECT  A.* , ROWNUM RNUM
 				FROM
 				(
 					SELECT 
@@ -62,8 +62,11 @@
 	</select>
 	<resultMap type="MemberVO" id="memberMap" autoMapping="true">
 		<id property="memId" column="MEM_ID"/>
+		<!-- has many 형식 
+		javaType 사용할 자바 형식
+		 -->
 		<collection property="prodList" javaType="java.util.Set" ofType="ProdVO"  autoMapping="true">
-			<result property="prodId" column="PROD_ID"/>
+			<id property="prodId" column="PROD_ID"/>
 			<association property="buyer" autoMapping="true"></association> <!-- has a 관계??? -->
 		</collection>
 	</resultMap>
@@ -119,4 +122,37 @@
  	
  	</delete>
  	
+ 	<insert id="insertMember" parameterType="MemberVO">
+ 	INSERT INTO member (
+		    mem_id,    mem_pass,    mem_name,
+		    mem_regno1,    mem_regno2,    mem_bir,
+		    mem_zip,    mem_add1,    mem_add2,
+		    mem_hometel,    mem_comtel,    mem_hp,
+		    mem_mail,    mem_job,    mem_like,
+		    mem_memorial,    mem_memorialday,  
+		    
+	) VALUES (
+			#{memId , jdbcType=VARCHAR},
+			#{memPass , jdbcType=VARCHAR},
+			#{memName , jdbcType=VARCHAR},
+			#{memRegno1 , jdbcType=VARCHAR},
+			#{memRegno2 , jdbcType=VARCHAR},
+			to_date(#{memBir , jdbcType=DATE}, 'YYYY-MM-DD') ,
+			#{memZip , jdbcType=VARCHAR},
+			#{memAdd1 , jdbcType=VARCHAR},
+			#{memAdd2 , jdbcType=VARCHAR},
+			#{memHometel , jdbcType=VARCHAR},
+			#{memComtel , jdbcType=VARCHAR},
+			#{memHp , jdbcType=VARCHAR},
+			#{memMail , jdbcType=VARCHAR},
+			#{memJob , jdbcType=VARCHAR},
+			#{memLike , jdbcType=VARCHAR},
+			#{memMemorial , jdbcType=VARCHAR},
+			to_date(#{memMemorialday , jdbcType=DATE}, 'YYYY-MM-DD') 
+			 
+		 
+)
+ 	
+ 	
+ 	</insert>
 </mapper>

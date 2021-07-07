@@ -30,31 +30,27 @@
 		if(errors==null){
 			errors = new HashMap<>();
 		} */
+		MemberVO authMember	=	(MemberVO)session.getAttribute("authMember");
+	
 		String message = (String) request.getAttribute("message");
 
 		if (StringUtils.isNoneBlank(message)) {
 	%>
 	<script type="text/javascript">
-		alert("<%=message%>
-		");
+		alert("<%=message%>");
 	</script>
 	<%
 		}
 	%>
-
-
-	<form method="POST"
-		action="<%=request.getContextPath()%>/member/memberUpdate.do"
-		id="memberForm">
+	 
+	<form method="POST" id="memberForm">
 		<table class='table table-bordered'>
-			"
 			<tr>
 				<th>회원 id</th>
 				<td><input type="text" name="memId"
 					required    value="<%=member.getMemId()%>" /><label id="memId-error"
 					class="error" for="memId"><%=errors.get("memId")%></label></td>
 			</tr>
-			"
 			<tr>
 				<th>비밀 번호</th>
 				<td><input type="text" name="memPass"
@@ -163,17 +159,34 @@
 					value="<%=member.getMemDelete()%>" /><label id="memDelete-error"
 					class="error" for="memDelete"><%=errors.get("memDelete")%></label></td>
 			</tr>
+				 <%
+						
+					if(authMember!=null){
+				 %>
 			<tr>
-
-				<td colspan="2"><input type="submit" id="submit" value="수정 "></td>
-				<td colspan="2"><input type="submit" id="submit" value="삭제 "></td>
+				<td colspan="2"><input type="submit" id="modify" data-url='<%=request.getContextPath() %>/member/memberUpdate.do' value="수정 "></td>
+		<%
+					}else{				 
+		%>
+				<td colspan="2"><input type="submit" id="insert" value="회원가입 " data-url='<%=request.getContextPath() %>/member/memberInsert.do'></td>	
+				<%
+					}
+				%>
 			</tr>
 
-
-			</form>
-
 		</table>
+			</form>
 		<script type="text/javascript">
+			let insert = $("#insert");
+			let modify = $("#modify");
+			let memberForm =$("#memberForm");
+			$("input[type='button']").on("click" , function(){
+				let url = this.data("url");   
+				memberForm.attr("action" , url)
+				memberForm.submit();
+			})
+			
+			
 			$("#memberForm").validate();
 		</script>
 </body>

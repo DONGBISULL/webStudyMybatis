@@ -33,8 +33,21 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public ServiceResult createMemberVO(MemberVO member) {
-
-		return null;
+		ServiceResult result = null;
+		
+		if(dao.selectMemberDetail(member.getMemId())==null) {
+		
+		int cnt = dao.insertMember(member);
+			if(cnt>0) {
+				result = ServiceResult.OK;
+			}else {
+				result = ServiceResult.FAIL;
+			}
+		
+		}else {
+			result = ServiceResult.PKDUPLICATED;
+		}
+		return result;
 	}
 
 	@Override
@@ -46,7 +59,6 @@ public class MemberServiceImpl implements MemberService {
  
 	@Override
 	public ServiceResult modifyMember(MemberVO vo) {
-		// TODO Auto-generated method stub
 		MemberVO savedMember = 	retrieveMember(vo.getMemId());
 		String savedPass = savedMember.getMemPass();
 		String inputPass = vo.getMemPass();

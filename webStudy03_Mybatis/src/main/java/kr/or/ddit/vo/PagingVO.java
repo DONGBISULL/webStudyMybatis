@@ -22,11 +22,12 @@ public class PagingVO<T> {
 	private int startPage;
 	private int endPage;
 	
+	private DataBasePropertyVO searchData ;
 	private SearchVO simpleSearch; //단순 키워드
 	private T detailSearch;//상세 키워드
-	private List<T> detaList;
-	public void setDetaList(List<T> detaList) {
-		this.detaList = detaList;
+	private List<T> dataList;
+	public void setDataList(List<T> dataList) {
+		this.dataList = dataList;
 	}
 	
 	public PagingVO(int screenSize, int blockSize) {
@@ -76,13 +77,20 @@ public class PagingVO<T> {
 		return html.toString();
 	
 	}
-
+	
+	
+	
+	
 	public void setSimpleSearch(SearchVO simpleSearch) {
 		this.simpleSearch = simpleSearch;
 	}
 
 	public void setDetailSearch(T detailSearch) {
 		this.detailSearch = detailSearch;
+	}
+
+	public void setSearchData(DataBasePropertyVO searchData) {
+		this.searchData = searchData;
 	}
 	
 }

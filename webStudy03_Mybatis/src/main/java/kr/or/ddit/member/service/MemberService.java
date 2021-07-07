@@ -15,7 +15,7 @@ public interface MemberService {
 	/**
 	 * 
 	 * @param member
-	 * @return PKDUPLICATED , OK  , FAIL
+	 * @return PKDUPLICATED (검증 통과 id만 문제==> 아이디만 바꿔서 아까 작성했던 ), OK  , FAIL
 	 */
 	public ServiceResult createMemberVO(MemberVO member);
 	

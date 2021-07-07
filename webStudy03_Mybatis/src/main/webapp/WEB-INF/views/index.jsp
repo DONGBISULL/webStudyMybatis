@@ -17,6 +17,7 @@ if(authMember==null){
 %>
 <h4>
    <a href="<%=request.getContextPath() %>/login/loginFormT.jsp">로그인하러 가기</a>
+   <a href="<%=request.getContextPath() %>/member/memberInsert.do">회원 가입</a>
 </h4> 
 <%
    }else{

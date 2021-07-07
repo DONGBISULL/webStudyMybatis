@@ -50,8 +50,15 @@ public class MemberDaoImpl implements MemberDAO {
 
 	@Override
 	public int insertMember(MemberVO member) {
-	                                                                      
-		return 0;
+	       try(
+					SqlSession sqlSession = sqlSessionFactory.openSession();
+					){
+	    	   MemberDAO	mapper = sqlSession.getMapper(MemberDAO.class);
+	    		int cnt = mapper.insertMember(member) ;
+	    	   sqlSession.commit();
+				return cnt;
+			}                                                               
+		 
 	}
 
 	@Override

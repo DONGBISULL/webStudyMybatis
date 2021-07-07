@@ -16,17 +16,21 @@ public class MemberDaoImplTest {
 		dao = MemberDaoImpl.getInstance();
 	}
 
-	@Test
-	public void testSelectMemberById() {
-	MemberVO member =  dao.selectMemberById("a001");
-	System.out.println(member);
-	assertNotNull(member);
-	}
-	/*
+//	@Test
+//	public void testSelectMemberById() {
+//	MemberVO member =  dao.selectMemberById("a001");
+//	System.out.println(member);
+//	assertNotNull(member);
+//	}
 	@Test
 	public void testInsertMember() {
-		fail("Not yet implemented");
+		MemberVO vo = 	dao.selectMemberDetail("c001");
+		vo.setMemId("dobi2");
+		System.out.println(vo);
+		int result = 	dao.insertMember(vo);
+		assertEquals(1, result);
 	}
+	/*
 */
 //	@Test
 //	public void testSelectMemebrList() {

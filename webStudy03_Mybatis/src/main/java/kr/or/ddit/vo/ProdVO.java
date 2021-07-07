@@ -1,12 +1,16 @@
 package kr.or.ddit.vo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * 상품 관리 Domain Layer 
  *
  */
+@Getter
 @Data
 @EqualsAndHashCode(of="prodId")
 public class ProdVO {
@@ -17,7 +21,7 @@ public class ProdVO {
 	private String prodBuyer;
 	
 	//**** prod와 member 관계 
-	private BuyerVO buyer;
+	private BuyerVO buyer; //has a 관계 --> association 관계
 	
 	//private String buyerName;
 	private Integer prodCost;
@@ -36,5 +40,7 @@ public class ProdVO {
 	private Integer prodQtyin;
 	private Integer prodQtysale;
 	private Integer prodMileage;
+	
+	private List<MemberVO> memberList; //map에서 collection 필요 
 	
 }

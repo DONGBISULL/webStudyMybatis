@@ -50,7 +50,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
 		//memberList 라는 이름의 속성으로 회원 목록 공유
 		List<MemberVO> memList = service.retrieveMemberList(pagingVO);
 		//req.setAttribute("memList", memList);
-		pagingVO.setDetaList(memList);
+		pagingVO.setDataList(memList);
 		req.setAttribute("pagingVO", pagingVO);
 		
 		String dest ="/WEB-INF/views/member/memberList.jsp";

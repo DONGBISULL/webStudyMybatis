@@ -35,7 +35,7 @@ padding :10px;
 	 
 <%
 	PagingVO<MemberVO> pagingVO = (PagingVO)request.getAttribute("pagingVO");
-	List<MemberVO> memList =pagingVO.getDetaList();
+	List<MemberVO> memList =pagingVO.getDataList();
 	if(	memList.size()==0){
 		
 %>
